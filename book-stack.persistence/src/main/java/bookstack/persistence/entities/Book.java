@@ -33,10 +33,14 @@ public class Book implements Serializable {
 	@Column(name = "isbn")
 	private String isbn;
 	
-    @ManyToOne(fetch = FetchType.EAGER, cascade= {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "author")
 	private Author autor;
 	
+    @ManyToOne(fetch = FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "idcategory")
+	private Category category;
+    
 	public Book() {}
 
 	public String getTitle() {
@@ -71,7 +75,13 @@ public class Book implements Serializable {
 		this.autor = autor;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
 
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 	
 
 }

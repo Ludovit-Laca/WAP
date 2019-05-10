@@ -34,7 +34,7 @@ public class Author {
 	@Column(name = "surname")
 	private String surname;
 
-	@OneToMany(mappedBy = "autor") // zmena mena
+	@OneToMany(mappedBy = "autor", cascade={CascadeType.ALL}) // zmena mena
 	private List<Book> books;
 
 	public Author() {

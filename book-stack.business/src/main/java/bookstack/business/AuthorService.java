@@ -1,5 +1,7 @@
 package bookstack.business;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -18,5 +20,13 @@ public class AuthorService {
 	
 	public Author createAuthor(Author author) {
 		return this.authorDAO.create(author);
+	}
+	
+	public Author deleteAuthor(Author author) {
+		return this.authorDAO.delete(author);
+	}
+	
+	public List<Author> getAllAuthors() {
+		return authorDAO.findAll();
 	}
 }

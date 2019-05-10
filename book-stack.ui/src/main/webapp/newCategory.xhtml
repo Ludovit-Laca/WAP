@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+
+<ui:composition template="/WEB-INF/layout.xhtml">
+	<ui:define name="content">
+		<b:accordion expanded-panels="panel1,panel3">
+			<b:panel id="panel3" title="Zoznam kategórii" look="primary">
+				<h:form>
+					<b:dataTable value="#{booksView.categoryList}" var="category">
+						<b:dataTableColumn label="Kategórie">#{category.category_name}</b:dataTableColumn>
+						<b:dataTableColumn label="Action">
+							<b:commandButton id="removeCategoryBtn" iconAwesome="fa-sign-out"
+								oncomplete="newCategory.xhtml"
+								actionListener="#{bookController.deleteCategory(category)}"
+								update="@form" />
+						</b:dataTableColumn>
+					</b:dataTable>
+				</h:form>
+			</b:panel>
+			<b:panel id="panel1" title="Pridať kategóriu" look="primary">
+				<h:form id="newCategoryForm">
+					<b:inputText id="nameId"
+						value="#{booksView.category.category_name}"
+						placeholder="Kategória" required="true" label="Kategória:"
+						requiredMessage="Name is required" colMd="10" labelColMd="2">
+						<f:facet name="prepend">
+							<b:iconAwesome value="fa-archive" />
+						</f:facet>
+					</b:inputText>
+					<b:commandButton value="Odoslať" look="primary" size="lg"
+						actionListener="#{bookController.createCategory}" update="@form" />
+				</h:form>
+			</b:panel>
+		</b:accordion>
+	</ui:define>
+</ui:composition>
+
+
+</html>

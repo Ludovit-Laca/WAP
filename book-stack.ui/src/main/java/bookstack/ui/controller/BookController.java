@@ -1,20 +1,21 @@
 package bookstack.ui.controller;
 
+
 import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import bookstack.business.AuthorService;
 import bookstack.business.BookService;
-import bookstack.persistence.dao.BookDAO;
+import bookstack.business.CategoryService;
 import bookstack.persistence.entities.Author;
 import bookstack.persistence.entities.Book;
+import bookstack.persistence.entities.Category;
 
 //anotacia, ktorou vieme jednoznacne identifikovat nazov beany v kontajneri ak je
 //pouzita bez parametra : @Named pouzije sa ako identifikator nazov beany (bookController)
@@ -42,6 +43,9 @@ public class BookController implements Serializable{
 	
 	@Inject
 	private AuthorService authorService;
+	
+	@Inject
+	private CategoryService categoryService;
 	
 	@Inject 
 	private BookSessionStatistics bookSessionStatistics;
@@ -87,31 +91,38 @@ public class BookController implements Serializable{
 		return builder.toString();
 	}
 	
-	public void createBook(){
-		String name = getRandomName();
-		String surname = getRandomSurname();
-
-		Author author = new Author(name, surname);
-		
+	public void createBookFromInput() {
+		Author author = booksView.getSelectedAuthor();
+		Category category = booksView.getSelectedCategory();
 		Book book = new Book();
-		book.setTitle(books[ThreadLocalRandom.current().nextInt(0,books.length)]);
+		book.setTitle(booksView.getBookTitle());
 		book.setIsbn(generateIsbn());
-		
-		//Nastavim vazbu na autora
-		//book.setAutor(author);
-		//author.getBooks().add(book);
-		//IBA TOTO VOLANIE SA VYKONAVA V TRANSAKCII CDI NEMA PODPORU PRE TRANSAKCIE EJB ANO
-		bookService.create(book,author);
-		
-		//refresh data na UI
-		booksView.setBookList(bookService.getAllBooks());
-		bookSessionStatistics.triggerRandomBookCreationStatistics();
+		bookService.create(book, author, category);
+		booksView.setBook(new Book()); 
+	}
+	
+	public void deleteBook(Book book) {
+		bookService.deleteBook(book);
 	}
 	
 	public void createAuthor() {
 		Author author = authorService.createAuthor(booksView.getAuthor());
 		System.out.println(author);
 		booksView.setAuthor(new Author());
+	}
+	
+	public void deleteAuthor(Author author) {
+		authorService.deleteAuthor(author);
+	}
+	
+	public void createCategory() {
+		Category category = categoryService.createCategory(booksView.getCategory());
+		System.out.println(category);
+		booksView.setCategory(new Category());
+	}
+	
+	public void deleteCategory(Category category) {
+		categoryService.deleteCategory(category);
 	}
 
 }

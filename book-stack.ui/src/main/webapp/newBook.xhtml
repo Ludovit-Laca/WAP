@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+
+<ui:composition template="/WEB-INF/layout.xhtml">
+	<ui:define name="content">
+
+		<b:accordion expanded-panels="panel1,panel3">
+
+			<b:panel id="panel1" title="Zoznam kníh" look="primary">
+				<h:form id="bookForm">
+					<b:dataTable value="#{booksView.bookList}" var="book">
+						<b:dataTableColumn label="Title">#{book.title}</b:dataTableColumn>
+						<b:dataTableColumn label="ISBN">#{book.isbn}</b:dataTableColumn>
+						<b:dataTableColumn label="Autor">#{book.autor.fullName}</b:dataTableColumn>
+						<b:dataTableColumn label="Kategoria">#{book.category.category_name}</b:dataTableColumn>
+						<b:dataTableColumn label="Action">
+							<b:commandButton id="removeBookBtn" iconAwesome="fa-sign-out"
+								oncomplete="newBook.xhtml"
+								actionListener="#{bookController.deleteBook(book)}"
+								update="@form" />
+						</b:dataTableColumn>
+					</b:dataTable>
+				</h:form>
+			</b:panel>
+
+			<b:panel id="panel3" title="Pridať knihu" look="primary">
+				<h:form>
+
+					<b:inputText id="nameId" value="#{booksView.bookTitle}"
+						placeholder="Názov knihy" required="true" label="Názov knihy:"
+						requiredMessage="Name is required" colMd="10" labelColMd="2">
+						<f:facet name="prepend">
+							<b:icon name="book" />
+						</f:facet>
+					</b:inputText>
+
+					<b:selectOneMenu value="#{booksView.selectedAuthor}"
+						label="Vyberte autora:" labelColMd="2" required="true">
+						<f:facet name="prepend">
+							<b:icon name="user" />
+						</f:facet>
+						<f:selectItems value="#{booksView.authorList}" var="author"
+							itemValue="#{author}"
+							itemLabel="#{booksView.getAuthorLabel(author)}" />
+						<f:facet name="append">
+							<b:iconAwesome name="list" />
+						</f:facet>
+					</b:selectOneMenu>
+
+					<b:selectOneMenu value="#{booksView.selectedCategory}"
+						label="Vyberte kategóriu:" labelColMd="2" required="true">
+						<f:facet name="prepend">
+							<b:iconAwesome value="fa-archive" />
+						</f:facet>
+						<f:selectItems value="#{booksView.categoryList}" var="category"
+							itemValue="#{category}"
+							itemLabel="#{booksView.getCategoryLabel(category)}" />
+						<f:facet name="append">
+							<b:iconAwesome name="list" />
+						</f:facet>
+					</b:selectOneMenu>
+
+					<b:commandButton value="Odoslať" look="primary" size="lg"
+						update="@form"
+						actionListener="#{bookController.createBookFromInput}" />
+				</h:form>
+			</b:panel>
+		</b:accordion>
+	</ui:define>
+</ui:composition>
+
+
+</html>

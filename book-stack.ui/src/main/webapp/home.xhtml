@@ -3,44 +3,22 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/layout.xhtml">
 	<ui:define name="content">
-		<h:form id="bookForm">
-		<p:message for="nameId" ></p:message>
-			<p:outputLabel styleClass="sectionHeading" value="Zoznam mojich knih" />
-			<h:panelGroup style="float:right; margin-bottom:20px">
-			<p:outputLabel for="nameId">Name:</p:outputLabel>
-			<h:inputText id="nameId" value="#{booksView.author.name}" required="true" requiredMessage="Name is required"></h:inputText>
-			<h:inputText value="#{booksView.author.surname}"></h:inputText>
-			<p:commandButton value="Create from input" actionListener="#{bookController.createAuthor}" update="@form"></p:commandButton>
-			<p:commandButton value="Create Random Book" style="margin:10px;" update="@form" actionListener="#{bookController.createBook}"/>
-				<p:dataTable value="#{booksView.bookList}" var="book">
-					<p:column headerText="Title">#{book.title}</p:column>
-					<p:column headerText="ISBN">#{book.isbn}</p:column>
-					<p:column headerText="Autor">#{book.autor.fullName}</p:column>
-				</p:dataTable>
-			</h:panelGroup>
-			<br />
-		</h:form>
-		
-		<h :form>
-			<p:outputLabel value="Zadajte hodnotu v € : "/>
-			
-    		<h:inputText id="ccno" size="19" converter="ccno" value="#{peniazeConvertor.suma}" /> <p:outputLabel value=" €"/>
-			
-			<br /> <p:outputLabel value="to"/> <br />
-			
-			<h:selectOneMenu id="shippingOption" required="true" value="#{peniazeConvertor.typ}">
-    			<f:selectItems value="#{data.statuses}" var="status" itemValue="#{status}" itemLabel="#{status.label}"/>
-			</h:selectOneMenu> &#160;
-			
-			<h:outputText id="counterText" value="#{peniazeConvertor.suma_nova}" rendered="true" escape="false" /> <br /><br />
-			
-			<h:commandButton value="Konvertuj" action="#{peniazeConvertor.odosli}" update="@form"/>
-		</h:form>
-		
+		<b:accordion expanded-panels="panel1,panel3">
+			<b:panel id="panel1" title="Zoznam kníh" look="primary">
+				<h:form>
+					<b:dataTable value="#{booksView.bookList}" var="book">
+						<b:dataTableColumn label="Title">#{book.title}</b:dataTableColumn>
+						<b:dataTableColumn label="ISBN">#{book.isbn}</b:dataTableColumn>
+						<b:dataTableColumn label="Autor">#{book.autor.fullName}</b:dataTableColumn>
+						<b:dataTableColumn label="Kategoria">#{book.category.category_name}</b:dataTableColumn>
+					</b:dataTable>
+				</h:form>
+			</b:panel>
+		</b:accordion>
 	</ui:define>
 </ui:composition>
 </html>

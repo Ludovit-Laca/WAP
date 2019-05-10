@@ -2,13 +2,36 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head></h:head>
-<body>
-	<div style="width: 100%; float: left" align="center">
-		<div style="float: right;" align="right">Header section..</div>
-	</div>
-</body>
+<h:body style="padding: 60px;">
+	<b:navBar brand="Bookstore" fixed="top" inverse="true">
+		<b:navbarLinks>
+			<b:navLink value="#{lang['mybooks.new']}"
+				href="home.xhtml?faces-redirect=true"></b:navLink>
+			<b:dropMenu value="#{lang['tables.new']}" iconAwesome="fa-table">
+				<b:navLink value="#{lang['author.new']}"
+					href="newAuthor.xhtml?faces-redirect=true"></b:navLink>
+				<b:navLink value="#{lang['books.new']}"
+					href="newBook.xhtml?faces-redirect=true"></b:navLink>
+				<b:navLink value="#{lang['category.new']}"
+					href="newCategory.xhtml?faces-redirect=true"></b:navLink>
+			</b:dropMenu>
+			<b:navLink value="#{lang['converter.new']}"
+				href="konverter.xhtml?faces-redirect=true"></b:navLink>
+		</b:navbarLinks>
+		<b:navbarLinks pull="right" style="padding-top: 10px">
+			<h:form id="languageForm">
+				<b:selectOneMenu value="#{languageBean.localeCode}"
+					onchange="submit()"
+					valueChangeListener="#{languageBean.countryLocaleCodeChanged}">
+					<f:selectItems value="#{languageBean.countriesInMap}" />
+				</b:selectOneMenu>
+			</h:form>
+		</b:navbarLinks>
+	</b:navBar>
+</h:body>
 </html>
