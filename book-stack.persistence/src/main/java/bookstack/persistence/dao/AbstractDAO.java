@@ -32,7 +32,6 @@ public abstract class AbstractDAO<T> {
 
     public T delete(T entity) {
     	T entity2 = em.merge(entity);
-    	//em.remove(em.contains(entity) ? entity : em.merge(entity));
         em.remove(entity2);
         return entity;
     }

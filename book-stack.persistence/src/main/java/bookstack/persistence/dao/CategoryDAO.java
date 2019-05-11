@@ -14,11 +14,8 @@ public class CategoryDAO extends AbstractDAO<Category> {
 	}
 
 	/**
-	 * Method retrieves the category which is identified by category_name
-	 * (unique), in case of no category_name found it returns NULL OBJECT.
-	 * 
-	 * @param category_name
-	 * @return category identified by category_name, otherwise NULL
+	 * @param name
+	 * @return category identified by name, otherwise NULL
 	 */
 	public Category getCategoryByName(String name) {
 		TypedQuery<Category> query = em.createNamedQuery("findBooksByCategory", Category.class);
@@ -29,7 +26,5 @@ public class CategoryDAO extends AbstractDAO<Category> {
 			// in case of no result return null
 			return null;
 		}
-
 	}
-
 }

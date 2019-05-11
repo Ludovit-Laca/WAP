@@ -14,8 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-// kategoria musi byt jedinecna
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "category_name"}))
 @Entity
 @NamedQueries({
 	@NamedQuery(name = "findBooksByCategory", query = "SELECT c FROM Category c WHERE c.category_name = :category_name")
@@ -29,9 +27,11 @@ public class Category  {
 	@Column(name = "category_name")
 	private String category_name;
 	
+	// namapovanie OneToMany
 	@OneToMany(mappedBy = "category", cascade={CascadeType.ALL})
 	private List<Book> books;
 	
+	// konštruktory 
 	public Category(){
 	}
 	
@@ -39,7 +39,8 @@ public class Category  {
 		this.category_name = category_name;
 		this.books = new ArrayList<>();
 	}
-
+	
+	// getters a setters
 	public int getId() {
 		return id;
 	}
