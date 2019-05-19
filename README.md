@@ -15,4 +15,4 @@ Made by Ľudovít Laca.
 ![home](https://user-images.githubusercontent.com/38889174/57986860-66c07b00-7a7a-11e9-8f4b-084e07e81051.png)
 
 ### Pridať knihu
-![add](https://user-images.githubusercontent.com/38889174/57986882-b43ce800-7a7a-11e9-8d96-cbde115ddc72.png)
+![add](https://user-images.githubusercontent.com/38889174/57986908-0251eb80-7a7b-11e9-8c4d-be376b7fab97.png)
